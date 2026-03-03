@@ -1,0 +1,155 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --ridge-charcoal: #121417;
+  --ridge-slate: #2b2f36;
+  --ridge-blue: #2563eb;
+  --ridge-teal: #14b8a6;
+  --ridge-offwhite: #f8fafc;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Inter, 'SF Pro Text', 'Segoe UI', sans-serif;
+  background: var(--ridge-charcoal);
+  color: var(--ridge-offwhite);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ═══════════════════════════════════════
+   Auth / Login Background
+   ═══════════════════════════════════════ */
+.ridge-login-bg {
+  background-image:
+    radial-gradient(circle at 18% 24%, rgba(37, 99, 235, 0.18), transparent 45%),
+    linear-gradient(110deg, rgba(18, 20, 23, 0.06), rgba(18, 20, 23, 0.3)),
+    url('/ridgeflow-login.jpg');
+  background-size: cover;
+  background-position: center;
+}
+
+.ridge-dashboard-bg {
+  background-image:
+    radial-gradient(circle at 78% 8%, rgba(37, 99, 235, 0.2), transparent 38%),
+    linear-gradient(120deg, rgba(18, 20, 23, 0.35), rgba(18, 20, 23, 0.08)),
+    url('/ridgeflow-dashboard.jpg.webp');
+  background-size: cover;
+  background-position: center;
+}
+
+/* ═══════════════════════════════════════
+   Auth Inputs & Chips
+   ═══════════════════════════════════════ */
+.ridge-auth-input {
+  border-radius: 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.08), inset 0 -1px 1px rgba(0, 0, 0, 0.18);
+  padding: 0.56rem 0.75rem;
+  font-size: 0.9rem;
+  color: #f8fafc;
+}
+
+.ridge-auth-input::placeholder {
+  color: #cbd5e1;
+}
+
+.ridge-auth-input:focus {
+  border-color: #60a5fa;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.26), inset 0 1px 1px rgba(255, 255, 255, 0.09);
+  outline: none;
+}
+
+.ridge-auth-chip {
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(15, 23, 42, 0.5);
+  border-radius: 0.85rem;
+  padding: 0.68rem 0.8rem;
+  backdrop-filter: blur(6px);
+}
+
+/* ═══════════════════════════════════════
+   Onboarding Inputs (light mode)
+   ═══════════════════════════════════════ */
+.ridge-input {
+  width: 100%;
+  border-radius: 0.8rem;
+  border: 1px solid #cbd5e1;
+  background: #fff;
+  padding: 0.64rem 0.78rem;
+  font-size: 0.9rem;
+  color: #0f172a;
+}
+
+.ridge-input:focus {
+  border-color: var(--ridge-blue);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+  outline: none;
+}
+
+/* ═══════════════════════════════════════
+   Volt-Style Dashboard Design System
+   ═══════════════════════════════════════ */
+
+/* Dashboard inputs (light theme) */
+.volt-input {
+  width: 100%;
+  border-radius: 0.5rem;
+  border: 1px solid #d1d5db;
+  background: #fff;
+  padding: 0.56rem 0.78rem;
+  font-size: 0.875rem;
+  color: #262b40;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.volt-input::placeholder {
+  color: #9ca3af;
+}
+
+.volt-input:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  outline: none;
+}
+
+/* Scrollbar */
+main::-webkit-scrollbar {
+  width: 6px;
+}
+
+main::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+main::-webkit-scrollbar-thumb {
+  background: #e2e8f0;
+  border-radius: 999px;
+}
+
+main::-webkit-scrollbar-thumb:hover {
+  background: #cbd5e1;
+}
+
+/* ═══════════════════════════════════════
+   Accessibility
+   ═══════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
