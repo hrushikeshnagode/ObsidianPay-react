@@ -26,6 +26,11 @@ const money = (v) => new Intl.NumberFormat('en-US', { style: 'currency', currenc
 const shortDate = (v) => { if (!v) return '--'; const d = new Date(v); return Number.isNaN(d.getTime()) ? '--' : d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) }
 const labelize = (v) => v ? String(v).toLowerCase().replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase()) : '--'
 
+const chartSamples = [
+  { label: 'Mon', value: 2400 }, { label: 'Tue', value: 3890 }, { label: 'Wed', value: 3200 },
+  { label: 'Thu', value: 5600 }, { label: 'Fri', value: 4800 }, { label: 'Sat', value: 7200 }, { label: 'Sun', value: 9800 },
+]
+
 const MATERIAL_CATALOG = [
   { id: 'arch_shingles', name: 'Architectural Shingles', pricePerSq: 160, laborPerSq: 180 },
   { id: '3tab_shingles', name: '3-Tab Shingles', pricePerSq: 120, laborPerSq: 160 },
@@ -34,10 +39,7 @@ const MATERIAL_CATALOG = [
   { id: 'flat_roofing', name: 'Flat TPO/PVC', pricePerSq: 220, laborPerSq: 220 },
 ]
 
-const chartSamples = [
-  { label: 'Mon', value: 2400 }, { label: 'Tue', value: 3890 }, { label: 'Wed', value: 3200 },
-  { label: 'Thu', value: 5600 }, { label: 'Fri', value: 4800 }, { label: 'Sat', value: 7200 }, { label: 'Sun', value: 9800 },
-]
+const LINE_UNITS = ['SQ', 'Roll', 'Box', 'LF', 'Hr', 'Job']
 
 /* ═══════ Icons ═══════ */
 const I = {
@@ -306,13 +308,17 @@ export default function DashboardPanel({ token, user, onLogout }) {
         <Card hover={false} className="p-6">
           <h3 className="text-base font-semibold text-slate-800 mb-4">Execution Board</h3>
           <div className="space-y-2">
-            {jobs.slice(0, 15).map((job, idx) => (
-              <motion.div key={job.id} initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: idx * 0.04 }}
-                className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-gray-100 bg-gray-50/50 px-4 py-3 transition-colors hover:bg-gray-100">
-                <div><p className="text-sm font-semibold text-slate-800">{job.jobNumber || job.id}</p><p className="text-xs text-slate-500">Scheduled: {shortDate(job.scheduledDate)}</p></div>
-                <div className="flex items-center gap-2">
-                  <StatusBadge status={job.status || 'SCHEDULED'} />
-                  <OutlineBtn onClick={() => run(() => api.updateJobStatus(token, job.id, { status: 'IN_PROGRESS' }))}>Start</OutlineBtn>
+              {jobs.slice(0, 15).map((job, idx) => (
+                <motion.div key={job.id} initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: idx * 0.04 }}
+                  className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-gray-100 bg-gray-50/50 px-4 py-3 transition-colors hover:bg-gray-100">
+                  <div>
+                    <p className="text-sm font-semibold text-slate-800">{job.clientName || 'Unknown Client'}</p>
+                    <p className="text-xs text-slate-500">{job.serviceType || 'Roofing Project'} - {job.jobNumber || `Job #${job.id}`}</p>
+                    <p className="text-xs text-slate-400">Scheduled: {shortDate(job.scheduledDate)}</p>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <StatusBadge status={job.status || 'SCHEDULED'} />
+                    <OutlineBtn onClick={() => run(() => api.updateJobStatus(token, job.id, { status: 'IN_PROGRESS' }))}>Start</OutlineBtn>
                   <GreenBtn onClick={() => run(() => api.updateJobStatus(token, job.id, { status: 'COMPLETED' }))}>Complete</GreenBtn>
                 </div>
               </motion.div>

@@ -130,11 +130,26 @@ export function ModuleWrap({ moduleKey, children }) {
 
 /* ── Revenue Chart ── */
 export function RevenueChart({ data }) {
+  console.log('RevenueChart Data:', data)
+  if (!data || data.length === 0) return <div className="flex h-[220px] items-center justify-center text-slate-400 text-sm italic">No data available yet</div>
   const w = 680, h = 220
   const pad = { t: 20, r: 20, b: 35, l: 20 }
   const cw = w - pad.l - pad.r, ch = h - pad.t - pad.b
-  const maxVal = Math.max(...data.map(d => d.value)) * 1.15
-  const pts = data.map((d, i) => ({ x: pad.l + (i / (data.length - 1)) * cw, y: pad.t + ch - (d.value / maxVal) * ch }))
+  const vals = data.map(d => Number(d.value) || 0)
+  const maxVal = Math.max(...vals, 1000) * 1.15
+
+  if (data.length === 1) {
+    const p = { x: pad.l + cw / 2, y: pad.t + ch - (vals[0] / maxVal) * ch }
+    return (
+      <svg viewBox={`0 0 ${w} ${h}`} className="w-full" preserveAspectRatio="none">
+        <line x1={pad.l} y1={p.y} x2={w - pad.r} y2={p.y} stroke="#f0f0f0" strokeDasharray="4 3" />
+        <motion.circle cx={p.x} cy={p.y} r="6" fill="white" stroke="#f5a623" strokeWidth="3" initial={{ scale: 0 }} animate={{ scale: 1 }} />
+        <text x={p.x} y={h - 8} textAnchor="middle" className="fill-slate-400" style={{ fontSize: '11px' }}>{data[0].label}</text>
+      </svg>
+    )
+  }
+
+  const pts = data.map((d, i) => ({ x: pad.l + (i / (data.length - 1)) * cw, y: pad.t + ch - (vals[i] / maxVal) * ch }))
   let line = `M ${pts[0].x},${pts[0].y}`
   for (let i = 1; i < pts.length; i++) {
     const cp = (pts[i].x - pts[i - 1].x) * 0.4

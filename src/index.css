@@ -108,7 +108,8 @@ body {
   background: #fff;
   padding: 0.56rem 0.78rem;
   font-size: 0.875rem;
-  color: #262b40;
+  color: #0f172a !important;
+  /* Force dark text for visibility */
   transition: border-color 0.2s, box-shadow 0.2s;
 }
 

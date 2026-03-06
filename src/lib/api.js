@@ -99,5 +99,6 @@ export const api = {
   getAnalyticsSummary: (token) => request(ANALYTICS_API_BASE, '/api/analytics/summary', { token }),
   getEstimatorPerformance: (token) => request(ANALYTICS_API_BASE, '/api/analytics/estimators', { token }),
   getLeadSourcePerformance: (token) => request(ANALYTICS_API_BASE, '/api/analytics/lead-sources', { token }),
+  getAnalyticsHistory: (token) => request(ANALYTICS_API_BASE, '/api/analytics/history', { token }),
   seedAnalytics: (token, payload) => request(ANALYTICS_API_BASE, '/api/analytics/seed', { method: 'POST', token, body: payload }),
 }
